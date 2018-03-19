@@ -1,0 +1,25 @@
+<title>Pinclo</title>
+{{>nav}}
+<h1 class="text-center">Pinclo</h1>
+<div class="container">    
+    {{#unless user}}
+    <br>
+    <div class="row text-center">
+        <div class="col-">
+            <form action="/login">
+                <input type="submit" class="btn" value="Login">
+            </form>
+            <br>
+        </div>
+        <div class="col-">
+            <form action="/signup">
+                <input type="submit" class="btn" value="Sign Up">
+            </form>
+        </div>
+    </div>
+    {{/unless}}
+    <div class="row">
+        <p>Display pins here...</p>
+    </div>
+</div>
+
