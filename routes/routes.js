@@ -16,8 +16,32 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 module.exports = function (app, passport) {
-
+    
     app.get('/', function (req, res) {
+        res.render('index');
+    });    
+
+    app.get('/pins', function (req, res) {
+        res.send('display all pins');
+    });
+    
+    app.post('/pin', function (req, res) {
+        res.send('Create pin');
+    });
+    
+    app.delete('/pin/:id', function (req, res) {
+        res.send('Delete pin');
+    });
+    
+    app.get('/pin/:id', function (req, res) {
+        res.send('display single pin');
+    });
+    
+    app.get('/user/:id/pins/', function (req, res) {
+        res.send('display all user pins');
+    });
+    
+    app.get('/logout', function (req, res) {
         res.render('index');
     });
 
