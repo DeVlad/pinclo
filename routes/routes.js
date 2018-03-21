@@ -25,8 +25,12 @@ module.exports = function (app, passport) {
         res.send('display all pins');
     });
     
-    app.post('/pin', function (req, res) {
+    app.post('/user/:id/pin/', function (req, res) {
         res.send('Create pin');
+    });
+    
+    app.get('/user/:id/pin/', function (req, res) {
+        res.render('pin');
     });
     
     app.delete('/pin/:id', function (req, res) {

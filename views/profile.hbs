@@ -3,7 +3,8 @@
     <h2>Wellcome to your profile {{user.firstName}}</h2>
     <div>
         Name: {{user.firstName}} {{user.lastName}} <br> Email: {{user.email}}<br> <br>
-        <a href="/user/{{user.id}}/pins/"><button class="btn">My Pins</button></a><br>
+        <a href="/user/{{user.id}}/pins/"><button class="btn">My Pins</button></a><br><br>
+        <a href="/user/{{user.id}}/pin/"><button class="btn">New Pin</button></a><br>
         <hr>
     </div>
     <button id="btn-change-password" class="btn">Change password</button>
