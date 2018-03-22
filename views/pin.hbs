@@ -1,7 +1,8 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js" defer></script>
 {{>nav}}
 <div class="container">
     <div class="row">
-        <form method="post">
+        <form id="pin-form" method="post">
             <div class="row">
             <div class="col col-sm-6 col-md-4 form-group">                
                 <label for="comment">Pin:</label>
@@ -12,7 +13,7 @@
             <div class="col col-sm-6 col-md-4 input-group input-group-lg">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-link"></span>
                 </span>
-                <input class="form-control" type="text" name="url" minlength="10" maxlength="2000" required aria-required="true" placeholder="Picture url" spellcheck="false">
+                <input class="form-control" type="text" name="url" value="http://" minlength="10" maxlength="2000" required aria-required="true" placeholder="Picture url" spellcheck="false">
             </div><br>
             
             <button type="submit" class="btn">Create</button>
@@ -31,3 +32,54 @@
         {{/if}}
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+    $.validator.setDefaults({
+        submitHandler: function (form) {
+            var url = $(form).find('input[name="url"]').val();
+            shortenUrl(url);
+        }
+    });
+
+    $.validator.addMethod("validUrl", function (value, element) {
+        var re = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+        return this.optional(element) || re.test(value);
+    });
+
+    $("#pin-form").on("submit", function (event) {
+        event.preventDefault();
+    });
+
+    $("#pin-form").validate({
+        rules: {
+            url: {
+                required: true,
+                minlength: 4,
+                maxlength: 2000,
+                validUrl: true
+            }
+        },
+        messages: {
+            url: {
+                required: "Please provide a URL",
+                minlength: "Your URL must be at least 8 characters long",
+                maxlength: "Your URL must be at under 2000 characters long",
+                validUrl: "The URL must start with http:// or https:// Please enter a valid url like http://example.com"
+            }
+        },
+        errorElement: "em",
+        errorPlacement: function (error, element) {
+            error.addClass("help-block");
+            error.insertAfter(element);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
+        }
+    });
+});
+
+</script>
